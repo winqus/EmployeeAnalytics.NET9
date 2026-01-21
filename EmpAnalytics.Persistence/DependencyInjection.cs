@@ -21,6 +21,7 @@ public static class DependencyInjection
 
         services.AddScoped<IGetTop10RecentlyActiveEmployees, GetTop10RecentlyActiveEmployees>();
         services.AddScoped<IGetTop5AboveAveragePerformers, GetTop5AboveAveragePerformers>();
+        services.AddScoped<IGetTop5EmployeesExceedingOwnAverage, GetTop5EmployeesExceedingOwnAverage>();
 
         return services;
     }
