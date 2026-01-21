@@ -20,6 +20,7 @@ public static class DependencyInjection
             sp.GetRequiredService<ApplicationDbContext>());
 
         services.AddScoped<IGetTop10RecentlyActiveEmployees, GetTop10RecentlyActiveEmployees>();
+        services.AddScoped<IGetTop5AboveAveragePerformers, GetTop5AboveAveragePerformers>();
 
         return services;
     }
