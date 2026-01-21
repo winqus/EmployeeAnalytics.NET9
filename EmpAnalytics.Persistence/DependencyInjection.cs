@@ -1,4 +1,6 @@
 using EmpAnalytics.Application.Data;
+using EmpAnalytics.Application.Users.Get;
+using EmpAnalytics.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +18,8 @@ public static class DependencyInjection
 
         services.AddScoped<IApplicationDbContext>(sp =>
             sp.GetRequiredService<ApplicationDbContext>());
+
+        services.AddScoped<IGetTop10RecentlyActiveEmployees, GetTop10RecentlyActiveEmployees>();
 
         return services;
     }
