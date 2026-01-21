@@ -10,6 +10,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.ApplyMigrations();
+    await app.SeedDatabaseAsync(useLargeSeed: true); // Set to false for small seed (10 users, 100 records)
 }
 
 var summaries = new[]

@@ -6,4 +6,5 @@
   <Project Path="EmpAnalytics.Application/EmpAnalytics.Application.csproj" />
   <Project Path="EmpAnalytics.Domain/EmpAnalytics.Domain.csproj" />
   <Project Path="EmpAnalytics.Persistence/EmpAnalytics.Persistence.csproj" />
+  <Project Path="EmpAnalytics.Tests/EmpAnalytics.Tests.csproj" />
 </Solution>
