@@ -3,4 +3,5 @@
     <File Path="docker-compose.development.yaml" />
   </Folder>
   <Project Path="EmpAnalytics.API/EmpAnalytics.API.csproj" />
+  <Project Path="EmpAnalytics.Domain/EmpAnalytics.Domain.csproj" />
 </Solution>
