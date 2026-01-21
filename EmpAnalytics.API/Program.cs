@@ -1,40 +1,55 @@
+using EmpAnalytics.API.Controllers;
 using EmpAnalytics.API.Extensions;
+using EmpAnalytics.API.Middleware;
 using EmpAnalytics.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddOpenApi();
+
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddOpenApiDocument(config =>
+{
+    config.DocumentName = "EmployeeAnalyticsAPI";
+    config.Title = "EmployeeAnalyticsAPI v1";
+    config.Version = "v1";
+});
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins(
+            "http://localhost:5173",
+            "http://127.0.0.1:5173"
+        );
+    });
+});
+
 builder.Services.AddPersistence(builder.Configuration);
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseOpenApi();
+    app.UseSwaggerUi(config =>
+    {
+        config.DocumentTitle = "EmployeeAnalyticsAPI";
+        config.Path = "/swagger";
+        config.DocumentPath = "/swagger/{documentName}/swagger.json";
+        config.DocExpansion = "list";
+    });
+
     app.ApplyMigrations();
-    await app.SeedDatabaseAsync(useLargeSeed: true); // Set to false for small seed (10 users, 100 records)
+    await app.SeedDatabaseAsync(useLargeSeed: true);
 }
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+app.MapUsersEndpoints();
 
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast");
+app.UseCors();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
