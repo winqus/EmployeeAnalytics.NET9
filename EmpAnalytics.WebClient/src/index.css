@@ -1,11 +1,20 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --tlt-primary: #001A77;
+  --tlt-primary-2: #041D79;
+  --tlt-primary-muted: #6B7AA7;
+  --bg: #FFFFFF;
+  --panel: #F0F1F3;
+  --border: #D9DDE3;
+  --text: #1F2937;
+  --text-muted: #6B7280;
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color-scheme: light;
+  color: var(--text);
+  background-color: var(--bg);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,56 +22,79 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  background: var(--bg);
+}
+
+h1,
+h2,
+h3 {
+  color: var(--tlt-primary);
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  margin: 0 0 0.5em;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 1.75rem;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+h2 {
+  font-size: 1.25rem;
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+a {
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  color: var(--tlt-primary);
+  text-decoration: none;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+a:hover {
+  text-decoration: underline;
+}
+
+.btn-primary {
+  background: var(--tlt-primary-2);
+  color: #fff;
+  border: 1px solid var(--tlt-primary-2);
+  border-radius: 3px;
+  padding: 8px 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.btn-primary:hover {
+  filter: brightness(0.92);
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.5rem;
+}
+
+.card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.5rem;
+}
+
+.text-muted {
+  color: var(--text-muted);
+  font-size: 0.875rem;
 }
