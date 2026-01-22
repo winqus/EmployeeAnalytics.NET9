@@ -1,0 +1,52 @@
+﻿services:
+  empanalytics.db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    platform: linux/amd64
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+      MSSQL_PI: Developer
+    healthcheck:
+      test: [ "CMD-SHELL", "timeout 1 bash -c '</dev/tcp/localhost/1433'" ]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+    restart: unless-stopped
+
+  empanalytics.api:
+    image: empanalytics.api
+    build:
+      context: .
+      dockerfile: EmpAnalytics.API/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      ConnectionStrings__Database: "Server=empanalytics.db,1433;Database=EmployeeAnalytics;User Id=sa;Password=${MSSQL_SA_PASSWORD};Encrypt=False;TrustServerCertificate=True;"
+      Cors__AllowedOrigins__0: http://localhost:3000
+      Cors__AllowedOrigins__1: http://127.0.0.1:3000
+    depends_on:
+      empanalytics.db:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -fsS http://localhost:8080/health >/dev/null || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 60
+    restart: unless-stopped
+  
+  empanalytics.webclient:
+    image: empanalytics.webclient
+    build:
+      context: ./EmpAnalytics.WebClient
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:8080
+    ports:
+      - "3000:3000"
+    depends_on:
+      empanalytics.api:
+        condition: service_started
+    restart: unless-stopped
