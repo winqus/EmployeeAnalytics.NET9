@@ -53,3 +53,5 @@ app.UseCors();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.Run();
+
+public abstract partial class Program;
