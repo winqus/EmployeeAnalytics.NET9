@@ -11,6 +11,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RecentlyActiveEmployeesCard } from './components/RecentlyActiveEmployeesCard';
 import { AboveAveragePerformersCard } from './components/AboveAveragePerformersCard';
 import { EmployeesExceedingOwnAverageCard } from './components/EmployeesExceedingOwnAverageCard';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import type { } from '@mui/x-date-pickers/themeAugmentation';
 
 const queryClient = new QueryClient()
 
@@ -43,6 +46,11 @@ const theme = createTheme({
         },
       },
     },
+    MuiDatePicker: {
+      defaultProps: {
+        displayWeekNumber: false,
+      },
+    },
   },
 });
 
@@ -50,7 +58,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
-        <Content />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Content />
+        </LocalizationProvider>
       </QueryClientProvider>
     </ThemeProvider>
   )
@@ -80,6 +90,7 @@ function Content() {
         </Box>
       </Container>
     </Box>
+
   )
 }
 

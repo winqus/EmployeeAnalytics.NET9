@@ -197,7 +197,7 @@ export const sxStyles = {
 } as const;
 
 export const LOADING_MESSAGE = 'Loading...';
-export const APPBAR_TITLE = 'Employee Activity AnalyticsEmployee Activity Analytics';
+export const APPBAR_TITLE = 'Employee Activity Analytics';
 export const EMPLOYEES_DATA_LABELS = {
     RECENTLY_ACTIVE_EMPLOYEES_TITLE: 'Recently Active Employees',
     RECENTLY_ACTIVE_EMPLOYEES_FIRST_NAME: 'FIRST NAME',
@@ -208,6 +208,8 @@ export const EMPLOYEES_DATA_LABELS = {
     ABOVE_AVERAGE_PERFORMERS_FIRST_NAME: 'FIRST NAME',
     ABOVE_AVERAGE_PERFORMERS_LAST_NAME: 'LAST NAME',
     ABOVE_AVERAGE_PERFORMERS_JOB_COUNT: 'JOB COUNT',
+    ABOVE_AVERAGE_PERFORMERS_START_DATE: 'Start Date',
+    ABOVE_AVERAGE_PERFORMERS_END_DATE: 'End Date',
     EMPLOYEES_EXCEEDING_OWN_AVERAGE_TITLE: 'Employees Exceeding Own Average',
     EMPLOYEES_EXCEEDING_OWN_AVERAGE_SERIES: 'Jobs (Last 30 Days)',
 };

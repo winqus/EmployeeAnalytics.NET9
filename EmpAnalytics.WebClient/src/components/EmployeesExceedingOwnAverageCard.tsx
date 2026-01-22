@@ -6,11 +6,9 @@ import { useExceedingOwnAverageQuery } from '../lib/queries';
 import { Loader } from './Loader';
 import { ErrorOccured } from './Error';
 import { DataCard } from './DataCard';
-import { formatDate } from '../utils/date';
-import Typography from '@mui/material/Typography';
 
 export function EmployeesExceedingOwnAverageCard() {
-  const { isPending, error, data, dataUpdatedAt } = useExceedingOwnAverageQuery();
+  const { isPending, error, data } = useExceedingOwnAverageQuery();
 
   if (isPending) {
     return (
@@ -51,9 +49,6 @@ export function EmployeesExceedingOwnAverageCard() {
             height={280}
           />
         </Box>
-        <Typography sx={sxStyles.mutedText}>
-          Last updated: {formatDate(dataUpdatedAt)}
-        </Typography>
       </Paper>
     </DataCard>
   );
