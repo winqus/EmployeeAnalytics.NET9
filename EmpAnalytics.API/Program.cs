@@ -16,18 +16,21 @@ builder.Services.AddOpenApiDocument(config =>
     config.Version = "v1";
 });
 
+var allowedOrigins = builder.Configuration
+    .GetSection("Cors:AllowedOrigins")
+    .Get<string[]>() ?? Array.Empty<string>();
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
-    {
-        policy.WithOrigins(
-            "http://localhost:5173",
-            "http://127.0.0.1:5173"
-        );
-    });
+        policy.WithOrigins(allowedOrigins)
+            .AllowAnyHeader()
+            .AllowAnyMethod());
 });
 
 builder.Services.AddPersistence(builder.Configuration);
+
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -45,6 +48,8 @@ if (app.Environment.IsDevelopment())
     app.ApplyMigrations();
     await app.SeedDatabaseAsync(useLargeSeed: true);
 }
+
+app.MapHealthChecks("/health");
 
 app.MapUsersEndpoints();
 
