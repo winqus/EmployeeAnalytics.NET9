@@ -34,20 +34,18 @@ builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+app.UseOpenApi();
+app.UseSwaggerUi(config =>
 {
-    app.UseOpenApi();
-    app.UseSwaggerUi(config =>
-    {
-        config.DocumentTitle = "EmployeeAnalyticsAPI";
-        config.Path = "/swagger";
-        config.DocumentPath = "/swagger/{documentName}/swagger.json";
-        config.DocExpansion = "list";
-    });
+    config.DocumentTitle = "EmployeeAnalyticsAPI";
+    config.Path = "/swagger";
+    config.DocumentPath = "/swagger/{documentName}/swagger.json";
+    config.DocExpansion = "list";
+});
 
-    app.ApplyMigrations();
-    await app.SeedDatabaseAsync(useLargeSeed: true);
-}
+app.ApplyMigrations();
+await app.SeedDatabaseAsync(useLargeSeed: true);
+
 
 app.MapHealthChecks("/health");
 
