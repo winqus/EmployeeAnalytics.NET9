@@ -24,5 +24,8 @@ internal class UserJobConfiguration : IEntityTypeConfiguration<UserJob>
 
         builder.HasIndex(uj => new { uj.UserId, uj.DateTimeCreated })
             .IsDescending(false, true);
+
+        builder.HasIndex(uj => new { uj.DateTimeCreated, uj.UserId })
+            .IsDescending(true, false);
     }
 }
